@@ -1,0 +1,20 @@
+[33m908bb57[m[33m ([m[1;36mHEAD -> [m[1;32mdevJuanMa[m[33m, [m[1;32mmaster[m[33m)[m Merge branch 'master' of https://github.com/JuanMaVelezPa/CafeteriaGrupoF
+[33m36babd6[m Poner una carita feliz a restablecer contraseña
+[33m81122de[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #3 from JuanMaVelezPa/devPaula
+[33m817c4a3[m Carita felix en Restablecer Contraseña - Prueba
+[33md354da9[m cosas raras
+[33m51aa89b[m Cambio en master
+[33m1e8f72a[m Merge pull request #1 from JuanMaVelezPa/devopDago
+[33md1f8998[m Modifiqué el usario1 por usuario2
+[33m94e7e96[m Prueba de cambio de name de la contraseña
+[33m595fcf2[m[33m ([m[1;31morigin/devopDago[m[33m)[m Prubas de ramas
+[33mab497d0[m Se incorporan dos vistas adicionales, para recuperar contraseña y para la página donde irá la tienda, también se traduce el login a español
+[33m66d2690[m Logo MisionTic2022 agregado con su estilo
+[33mdee1698[m Saqué de la excepción el .png, solo se ignora el .jpg
+[33mc0bdecb[m Agruegué al .gitignore la excepción del .png
+[33m6b5da4f[m Agruegué una imagen al blog y el archivo .gitignore
+[33me5ccb85[m Ajuste a las carpetas, organización
+[33m1450b9e[m Creación del login.html y el post.css
+[33ma8a26b2[m Creacion de archivo estilos.css
+[33m17ce6a7[m Modifique la linea del body
+[33m7cb85a8[m first commit
