@@ -5,6 +5,7 @@ h1,h2,h3,h4,h5,h6{
     color:#ffffff;
     font-weight:bold;
     text-decoration-color: white;
+    position: relative;
 
 }
 
@@ -27,22 +28,36 @@ h1,h2,h3,h4,h5,h6{
     color:#fff;
     align-content: center;
     background-color: rgba(255,255,255,0.1);
+    
 }
 
 .main-wrapper{
     margin-left:350px; 
-    margin-right: 100px; 
+    margin-right: 15px; 
     margin-top: 50px;
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 550px;
+    position: relative;
 }
 
-.main-wrapper .container{max-width:850px}
+
+
 
 .footer{
     color:rgba(255, 255, 255, 0.7); 
     text-align: center;
+    margin-top: 100px;
+    position: relative;
 }
 
-.blog-list .item .title{font-size:1.275rem; margin-left: 100px; margin-top: -80px;} 
+.blog-list .item .title{
+  font-size:1.275rem; 
+  /* margin-left: 100px; */
+   margin-top: 0px;
+   text-decoration: underline;
+   position: relative;
+  } 
 
 .blog-list .item .title a{color:#ffffff}
 
@@ -50,32 +65,48 @@ h1,h2,h3,h4,h5,h6{
 
 
 .blog-list .item .meta{
-    margin-left: 100px;
+    /* margin-left: 100px; */
+    position: relative;
 }
+
+.blog-list .item .meta .comment{
+  text-decoration: white;
+  position: relative;
+}
+
 
 .blog-list .item .post-thumb{
     max-width:px;
     border-radius:30px;
     border-color: black;
+    position: relative;
 }
 
-.blog-list .item .intro{font-size:0.875rem;margin-left: 100px;}
+.blog-list .item .intro{
+  font-size:0.875rem;
+  /* margin-left: 100px; */
+}
 
 .blog-list .item .more-link{font-size:0.8125rem;margin-left: 100px;}
 
 @import url(https://fonts.googleapis.com/css?family=Open + Sans);
 
 .botonAtualizarInventario{
-    margin-left: 190px;
+    /* margin-left: 190px; */
 }
 
-h2{
-    text-align: center;
+
+
+.tipoRol{
+  text-align: center;
+  font-size: medium;
+  font-weight:bold;
 }
 
 .buscador{
     margin-left: 345px;
     width:27%
+    position: relative;
 }
 
 .imgLogo{
@@ -89,18 +120,15 @@ h2{
 img{
     width: 10%;
     height: 10%;
+    margin-top: 20px;
+    position: relative;
 }
 
-h1{
-    text-align: center;
-    margin-top: 2em;
-}
+h1{text-align: center;margin-top: 2em; position: relative;}
 
-h1 .a{
-    color: white;
+h1 .a{color: white; position: relative;}
 
-}
-
+h2{text-align: center; position: relative;}
 
 html {
     width: 100%;
