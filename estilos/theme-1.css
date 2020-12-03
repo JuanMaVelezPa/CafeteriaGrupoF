@@ -73,6 +73,12 @@ h2{
     text-align: center;
 }
 
+.tipoRol{
+  text-align: center;
+  font-size: medium;
+  font-weight:bold;
+}
+
 .buscador{
     margin-left: 345px;
     width:27%
