@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar nuevo producto</title>
+</head>
+<body>
+    <div class="login">
+    <h1>Registro nuevo producto</h1>
+    <form method="post" enctype="multipart/form-data">
+         <link rel="stylesheet" type="text/css" href="estilos/post.css" /> 
+         <img src="imagenes/logo_misionTic.png" class="imgLogo"  alt=""> 
+        <input type="text" name="np" placeholder="Nombre del producto" required="required" />
+        <input type="text" name="dp" placeholder="Descripción del producto" required="required" />
+
+         
+        <input type="file" name="ip" id ="selprod"  required="required" accept="image/png">
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Registrar nuevo producto</button>
+    </form>
+    </div>
+</body>
+</html>
