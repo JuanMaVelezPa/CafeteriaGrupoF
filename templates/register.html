@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
+    <script src="../static/js/validacion.js"></script>
+
+</head>
+<body>
+
+    <div class="login">
+        <header>
+            <div>
+                <h1>Registro Usuario</h1>
+            </div>
+        </header>
+
+        <!-- Esta parte es para mostrar el error que estoy validando en util.py
+            directamente en la pagina html, en este caso en la pate de arriba -->
+        <section class="messageRegister">
+            {% for message in get_flashed_messages()%}
+                <div class="messageRegister">{{ message}}</div>
+            {% endfor %}
+            </br>
+        </section>
+
+        <section>
+            <form name="formulario" method="post"  action="{{ url_for('register') }}">         
+                <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
+                <input type="text" name="usuario" placeholder="Usuario" required="required" />
+                <input type="text" name="email" placeholder="Email" required="required" />
+                <input type="password" name="password" placeholder="Contraseña" required="required" />
+                <button type="submit" class="btn btn-primary btn-block btn-large">Registrar</button>
+            </form>
+        </section>
+
+    </div>
+</body>
+</html>
