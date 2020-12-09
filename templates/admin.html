@@ -14,9 +14,10 @@
     <header class="header text-center">	    
         <h1 class="titulo">Cafetería Aroma</h1>
         <div>
-            <img src="../static/images/tazacafe.png"
+            <img src="../static/images/tazacafe.png">
         </div>
-         <hr>
+        <hr>
+
 	    <nav>   
 
 			<div id="navigation">
@@ -27,8 +28,8 @@
             
             <div class="descripciónPagina">Funcionalidades</div></br>
 				
-            <a href="registro.html" class="login-forgot-pass">1. Crear Usuario</a> </br></br>
-            <a href="" class="login-forgot-pass">2. Crear Producto</a>
+            <a href="{{ url_for('register') }}" class="login-forgot-pass">1. Crear Usuario</a> </br></br>
+            <a href="{{ url_for('registerProduct') }}" class="login-forgot-pass">2. Crear Producto</a>
 
             </br></br> <hr> 
 

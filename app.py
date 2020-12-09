@@ -60,7 +60,7 @@ def register():
                 flash(error)
                 return render_template('register.html')
 
-            serverEmail = yagmail.SMTP('prueba.jm.misiontic@gmail.com', 'Maracuya1234')
+            serverEmail = yagmail.SMTP('CafeteriaAromaMisionTic@gmail.com', 'Maracuya123')
 
             serverEmail.send(to=email, subject='Activa tu cuenta '+username+" en Cafeteria Aroma",
                              contents='Bienvenido, usa este link para activar tu cuenta')
@@ -105,11 +105,11 @@ def revision():
                 return render_template('passwordLost.html')
 
             if not (password == reviewPassword):
-                error = 'Debe ser igual las contraseñas ingresadas'
+                error = 'Las contraseñas ingresadas no coinciden'
                 flash(error)
                 return render_template('passwordLost.html')
 
-            serverEmail = yagmail.SMTP('prueba.jm.misiontic@gmail.com', 'Maracuya1234')
+            serverEmail = yagmail.SMTP('CafeteriaAromaMisionTic@gmail.com', 'Maracuya123')
 
             serverEmail.send(to=email, subject='Cambio Contraseña '+username+" en Cafeteria Aroma",
                              contents='El cambio de la contraseña fue Exitoso XD \n\n'+"**Su contraseña nueva es: "+password)
