@@ -8,7 +8,7 @@ app.secret_key = os.urandom(24)
 
 @app.route('/')
 def hello_world():
-    return render_template('register.html')
+    return render_template('login.html')
 
 @app.route('/home/')
 def myHome():
