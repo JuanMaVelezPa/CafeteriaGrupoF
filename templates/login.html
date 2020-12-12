@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reestablecer Contraseña</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
+    </head>
+    <body>
+
+        <div class="login">
+            <header>
+                <div>
+                    <h1>Login</h1>
+                </div>                
+            </header>
+            
+            <section>
+                <form name="loginForm" action="{{ url_for('store') }}" >
+                    <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt="">  
+                    <input type="text" name="u" placeholder="Usuario" required="required" />
+                    <input type="password" name="p" placeholder="Contraseña" required="required" />
+                    <button type="submit" class="btn btn-primary btn-block btn-large">Entrar.</button>
+                </form>
+                <a href="{{ url_for('passwordLost') }}" class="login-forgot-pass">¿Olvidaste la contraseña?</a>
+            </section> 
+            
+        </div>
+
+    </body>
+
+</html>
