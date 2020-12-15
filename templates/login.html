@@ -14,12 +14,21 @@
                     <h1>Login</h1>
                 </div>                
             </header>
+
+        <!-- Esta parte es para mostrar el error que estoy validando en util.py
+        directamente en la pagina html, en este caso en la pate de arriba -->
+        <section class="messageRegister">
+            {% for message in get_flashed_messages()%}
+                <div class="messageRegister">{{ message}}</div>
+            {% endfor %}
+            </br>
+        </section>
             
             <section>
-                <form name="loginForm" action="{{ url_for('store') }}" >
+                <form name="loginForm" action="{{ url_for('login') }}" method='POST' >
                     <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt="">  
-                    <input type="text" name="u" placeholder="Usuario" required="required" />
-                    <input type="password" name="p" placeholder="Contraseña" required="required" />
+                    <input type="text" name="username" placeholder="Usuario" required="required" />
+                    <input type="password" name="password" placeholder="Contraseña" required="required" />
                     <button type="submit" class="btn btn-primary btn-block btn-large">Entrar.</button>
                 </form>
                 <a href="{{ url_for('passwordLost') }}" class="login-forgot-pass">¿Olvidaste la contraseña?</a>
