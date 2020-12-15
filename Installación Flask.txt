@@ -1,0 +1,15 @@
+Comandos para instalar 
+VirtualE
+Flask
+
+Abrir CMD, hacer estos comandos para installar el servidor virtual
+
+pip
+python -m pip install virtualenv
+python -m venv Carpeta #Aca se crea la carpeta
+Carpeta\Scripts\activate.bat
+pip install flask
+pip freeze
+
+-->Si el proceso está bueno aparece antes de la ruta la 
+-->carpeta en parentesis (Carpeta)
