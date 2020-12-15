@@ -28,11 +28,12 @@
         </section>
 
         <section>
-            <form name="formulario" method="post"  action="{{ url_for('register') }}">         
+            <form name="formulario" method="POST"  action="{{ url_for('register') }}">         
                 <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
                 <input type="text" name="usuario" placeholder="Usuario" required="required" />
                 <input type="text" name="email" placeholder="Email" required="required" />
                 <input type="password" name="password" placeholder="Contraseña" required="required" />
+                <input type="text" name="rol" placeholder="Rol | A:Administador U:Usuario" required="required"/>
                 <button type="submit" class="btn btn-primary btn-block btn-large">Registrar</button>
             </form>
         </section>
