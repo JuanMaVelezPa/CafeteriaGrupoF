@@ -22,9 +22,22 @@
                 </section>
 
             </header>
+
+        <!-- Esta parte es para mostrar el error que estoy validando en util.py
+        directamente en la pagina html, en este caso en la pate de arriba -->
+        <section class="messageRegister">
+            {% for message in get_flashed_messages()%}
+                <div class="messageRegister">{{ message}}</div>
+            {% endfor %}
+            </br>
+        </section>
             
             <section>
+<<<<<<< HEAD
                 <form name="loginForm" action="{{ url_for('login') }}" method="POST" >
+=======
+                <form name="loginForm" action="{{ url_for('login') }}" method='POST' >
+>>>>>>> master
                     <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt="">  
                     <input type="text" name="username" placeholder="Usuario" required="required" />
                     <input type="password" name="password" placeholder="Contraseña" required="required" />
