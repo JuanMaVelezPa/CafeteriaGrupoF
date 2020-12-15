@@ -8,17 +8,25 @@
 <body>
     <div class="login">
     <h1>Registro Nuevo Producto</h1>
-    <form method="post" enctype="multipart/form-data">
+    <section class="messageRegister">
+        {% for message in get_flashed_messages()%}
+            <div class="messageRegister">{{ message}}</div>
+        {% endfor %}
+        </br>
+    </section>
+    <section>
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('registerProduct') }}">
          <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
          <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
         <input type="text" name="np" placeholder="Nombre del producto" required="required" />
         <input type="text" name="dp" placeholder="Descripción del producto" required="required" />
-
+        <input type="text" name="cp" placeholder="Cantidad del producto" required="required" />
          
-        <input type="file" name="ip" id ="selprod"  required="required" accept="image/png">
+        <input type="file" name="imagenp" id ="selprod"  required="required" accept="image/png">
 
         <button type="submit" class="btn btn-primary btn-block btn-large">Registrar nuevo producto</button>
     </form>
+    </section>
     </div>
 </body>
 </html>
