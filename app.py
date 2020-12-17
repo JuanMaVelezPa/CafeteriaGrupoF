@@ -21,9 +21,6 @@ def hello_world():
 @app.route('/login/', methods=('GET','POST'))
 def login():
     try:
-        if g.user:
-            return redirect(url_for('login'))
-
         if request.method == 'POST':
             close_db()
             db = get_db()
@@ -39,11 +36,8 @@ def login():
                 flash(error)
                 return render_template('login.html')
 
-
-
             user = db.execute('SELECT * FROM usuarios WHERE usuario=?',(username,)).fetchone()
 
-            
             if user is None:
                 error="Usuario o contraseña invalidos"
                 flash(error)
@@ -81,30 +75,38 @@ def getcookie():
 
 @app.route('/store/')
 def store():
+    if g.user is None:
+        return redirect(url_for("login"))
     close_db()
     db = get_db()
     data = db.execute('SELECT * FROM productos').fetchall()
-
+    close_db()
     return render_template('store.html', products = data)
 
 @app.route('/admin/editProduct/<id_producto>/')
 def updateProductadmin(id_producto):
+    if g.user is None:
+        return redirect(url_for("login"))
     close_db()
     db=get_db()
     productdata = db.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto)).fetchall()
-
+    close_db()
     return render_template('editProductadmin.html', product = productdata[0])
 
 @app.route('/store/editProduct/<id_producto>/')
 def updateProductstore(id_producto):
+    if g.user is None:
+        return redirect(url_for("login"))
     close_db()
     db=get_db()
     productdata = db.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto)).fetchall()
-
+    close_db()
     return render_template('editProductstore.html', product = productdata[0])
 
 @app.route('/admin/updateProduct/<id_producto>/', methods=('GET','POST'))
 def updateproductadmin(id_producto):
+    if g.user is None:
+        return redirect(url_for("login"))
 
     if request.method == 'POST':
         nombreprod = request.form['np']
@@ -114,6 +116,7 @@ def updateproductadmin(id_producto):
         db = get_db()
         db.execute('UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ? WHERE id_producto = ?',(nombreprod,descripcionprod,cantidadprod, id_producto))
         db.commit()
+        close_db()
         return redirect(url_for('admin'))
     error = "Error actualizando producto"
     flash(error)
@@ -121,6 +124,8 @@ def updateproductadmin(id_producto):
 
 @app.route('/store/updateProduct/<id_producto>/', methods=('GET','POST'))
 def updateproductstore(id_producto):
+    if g.user is None:
+        return redirect(url_for("login"))
 
     if request.method == 'POST':
         nombreprod = request.form['np']
@@ -130,6 +135,7 @@ def updateproductstore(id_producto):
         db = get_db()
         db.execute('UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ? WHERE id_producto = ?',(nombreprod,descripcionprod,cantidadprod, id_producto))
         db.commit()
+        close_db()
         return redirect(url_for('store'))
     error = "Error actualizando producto"
     flash(error)
@@ -141,6 +147,7 @@ def deleteProduct(id_producto):
     db = get_db()
     db.execute('DELETE FROM productos WHERE id_producto = {0}'.format(id_producto))
     db.commit()
+    close_db()
     return redirect(url_for('admin'))
 
 @app.route('/admin/')
@@ -150,6 +157,7 @@ def admin():
     close_db()
     db = get_db()
     data = db.execute('SELECT * FROM productos').fetchall()
+    close_db()
     return render_template('admin.html',products = data)
 
 
@@ -172,12 +180,14 @@ def registerProduct():
             if db.execute('SELECT * FROM productos WHERE nombre=?',(nombre,)).fetchone() is not None:
                 error= "El nombre del producto ya esta registrado"
                 flash(error)
+                close_db()
                 return render_template('registerProduct.html')
 
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             send_from_directory(app.config['UPLOAD_FOLDER'],filename)
             db.execute('INSERT INTO productos (nombre,descripcion,cantidad, imagen) VALUES (?,?,?,?)',(nombre,descripcion,cantidad,"../static/images/"+filename+"/"))
             db.commit()
+            close_db()
             
             return redirect(url_for('admin'))
         return render_template('registerProduct.html')
@@ -222,11 +232,13 @@ def register():
             if db.execute('SELECT * FROM usuarios WHERE usuario=? AND correo=?',(username, email)).fetchone() is not None:
                 error = "El usuario o correo electronico ya estan registrados"
                 flash(error)
+                close_db()
                 return render_template('register.html')
 
             hash_password = generate_password_hash(password)
             db.execute('INSERT INTO usuarios (usuario,contraseña,correo,rol,activo) VALUES (?,?,?,?,1)',(username, hash_password, email, rol))
             db.commit()
+            close_db()
 
             serverEmail = yagmail.SMTP('CafeteriaAromaMisionTic@gmail.com', 'Maracuya123')
 
@@ -315,7 +327,7 @@ def load_logged_user():
     else:        
         close_db()
         g.user = get_db().execute('SELECT * FROM usuarios WHERE usuario=?', (usuario,)).fetchone
-        print(g.user)
-
+        close_db()
+        
 if __name__ == '__main__':
     app.run()

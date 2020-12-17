@@ -1,13 +1,29 @@
-
-    <form method="post" action="/admin/updateProduct/{{ product.0 }}/">
-         <link rel="stylesheet" type="text/css" href="../static/css/store.css" /> 
-         <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
-        <input type="text" name="np" placeholder="Nombre del producto" value = "{{ product.1 }}" />
-        <input type="text" name="dp" placeholder="Descripción del producto" value = "{{ product.3 }}" />
-        <input type="text" name="cp" placeholder ="{{ product.2 }}" />
-         
-        <!-- <input type="file" name="imagenp" id ="selprod" accept="image/png"> -->
-
-        <button type="submit" class="btn btn-primary btn-block btn-large">Actualizar producto</button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualización Producto</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
     
+</head>
+<body>
+    <div class="login">
+        <header>
+            <div>
+                <h1>Actualización Producto</h1>
+            </div>
+        </header>
+        
+        <form method="post" action="/admin/updateProduct/{{ product.0 }}/">            
+            <input type="text" name="np" placeholder="Nombre del producto" value = "{{ product.1 }}" />
+            <input type="text" name="dp" placeholder="Descripción del producto" value = "{{ product.3 }}" />
+            <input type="text" name="cp" placeholder ="{{ product.2 }}" />
+            
+            <!-- <input type="file" name="imagenp" id ="selprod" accept="image/png"> -->
+
+            <button type="submit" class="btn btn-primary btn-block btn-large">Actualizar producto</button>
+        </form>
+    </div>    
+</body>
+</html>
