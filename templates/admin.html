@@ -46,36 +46,27 @@
     <input class="buscador" placeholder="Ingrese el nombre del producto"></input>
     <button class="botonBuscador">Buscar</button>
     
-    <div class="main-wrapper" >
-	    
+    <div class="main-wrapper" >	    
 	    <section class="blog-list px-3 py-5 p-md-5" >
-
-
-           
-                    {% for product in products%}
-                    <hr> <div class="container" >
-                        <div class="item mb-5">
-                            <div class="media">
-                                <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{product.4}}" alt="image" style="height: 150px">
-                                <div class="media-body">
-                                    <h3 class="title">{{product.1}}</h3>
-                                    <div class="intro">{{product.3}}</div><br />
-                                    <label class="meta" for="Inventario_actual" >Inventario actual: {{product.2}}</label>
-                                       
-                                    <a href= "/admin/editProduct/{{product.0}}/"><button class="botonAtualizarInventario">Actualizar producto</button></a>
-                                    <a href= "/deleteProduct/{{product.0}}/" ><button class="botonAtualizarInventario" clas ="btn-delete">Borrar Producto</button></a>
-                                    <br />
-                                </div>
+            {% for product in products%}
+                <hr> <div class="container" >
+                    <div class="item mb-5">
+                        <div class="media">
+                            <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{product.4}}" alt="image" style="height: 150px">
+                            <div class="media-body">
+                                <h3 class="title">{{product.1}}</h3>
+                                <div class="intro">{{product.3}}</div><br />
+                                <label class="meta" for="Inventario_actual" >Inventario actual: {{product.2}}</label>
+                                
+                                <a href= "/admin/editProduct/{{product.0}}/"><button class="botonAtualizarInventario">Actualizar producto</button></a>
+                                <a href= "/deleteProduct/{{product.0}}/" ><button class="botonAtualizarInventario" clas ="btn-delete">Borrar Producto</button></a>
+                                <br />
                             </div>
                         </div>
-                        
-                    </div>
-                    {% endfor %}
-                
-   			   
-		    </div>
-	    </section>
-	    
+                    </div>                    
+                </div>
+            {% endfor %}
+	    </section>	    
 	        
     </div><!--//main-wrapper-->
 

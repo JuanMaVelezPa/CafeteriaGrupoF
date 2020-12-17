@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar nuevo producto</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
+    <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
+    <script src="../static/js/validacion.js"></script>
+
 </head>
 <body>
 
@@ -17,8 +21,8 @@
     </section>
     <section>
     <form method="post" enctype="multipart/form-data" action="{{ url_for('registerProduct') }}">
-         <link rel="stylesheet" type="text/css" href="../static/css/post.css" /> 
-         <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
+        
+        <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
         <input type="text" name="np" placeholder="Nombre del producto" required="required" />
         <input type="text" name="dp" placeholder="Descripción del producto" required="required" />
         <input type="text" name="cp" placeholder="Cantidad del producto" required="required" />
