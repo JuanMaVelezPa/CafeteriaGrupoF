@@ -177,9 +177,9 @@ input:focus {
 
 @import url(https://fonts.googleapis.com/css?family=Open + Sans);
 
-.botonAtualizarInventario{
-    /* margin-left: 190px; */
-}
+/*.botonAtualizarInventario{
+     margin-left: 190px; 
+}*/
 
 
 
@@ -191,7 +191,7 @@ input:focus {
 
 .buscador{
     margin-left: 345px;
-    width:27%
+    width:27%;
     position: relative;
 }
 
