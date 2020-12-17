@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, make_response ,session, g, url_for, send_file 
 from db import get_db, close_db
 from werkzeug.security import generate_password_hash,check_password_hash
+from functools import wraps
+
 import utils
 import os 
 import yagmail as yagmail
+import functools
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -11,14 +15,14 @@ app.secret_key = os.urandom(24)
 def hello_world():
     return render_template('login.html')
 
-@app.route('/home/')
-def myHome():
-    return render_template('store.html')
-
 @app.route('/login/', methods=('GET','POST'))
 def login():
-    try: 
+    try:
+        if g.user:
+            return redirect(url_for('login'))
+
         if request.method == 'POST':
+            close_db()
             db = get_db()
             username = request.form['username']
             password = request.form['password']
@@ -43,30 +47,55 @@ def login():
             
             else:
                 if check_password_hash(user[1],password):
+                    if user[3] == 1:
+                        session.clear()
+                        session['usuario'] = user[0]
+                        resp = make_response(redirect(url_for('admin')))                 
+                        resp.set_cookie('username', username)
+                        return resp
+                        
+                    else:                        
+                        session.clear()
+                        session['usuario'] = user[0]
+                        resp = make_response(redirect(url_for('store')))                 
+                        resp.set_cookie('username', username)
+                        return resp                
+                    
+                error = "no coincide la contraseña"
+                flash(error)
+                return render_template("login.html")
 
-                #Es admin
-                    if user[3]== 1:
-                        return render_template('admin.html')
-                
-                    return render_template('store.html')
             return render_template('login.html')
         return render_template('login.html')
     except TypeError as e:
         print("Ocurrio un error ",e)
         return render_template('login.html')
 
+@app.route('/hello')
+def getcookie():
+    name = request.cookies.get('username')
+    return '<h1>'+name+'</h1>'
+
 @app.route('/store/')
 def store():
+    if g.user is None:
+        return redirect(url_for('login'))
     return render_template('store.html')
 
 @app.route('/admin/')
 def admin():
+    if g.user is None:
+        return redirect(url_for('login'))
     return render_template('admin.html')
 
 @app.route('/registerProduct/',methods=('GET','POST'))
 def registerProduct():
     try:
+        if g.user is None:
+            return redirect(url_for("login"))
+
         if request.method == 'POST':
+            close_db()
             db=get_db()
             nombre= request.form['np']
             descripcion= request.form['dp']
@@ -87,26 +116,24 @@ def registerProduct():
         print("Ocurrio un error ",e)
         return render_template('registerProduct.html')
 
-    
-
 @app.route('/passwordLost/')
 def passwordLost():
     return render_template('passwordLost.html')
 
-
-
 @app.route('/register/', methods=('GET','POST'))
-def register():
+def register():    
     try:
+        if g.user is None:
+            return redirect(url_for("login"))
+
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
             email = request.form['email']
             rol = request.form['rol']
             error = None
+            close_db()
             db= get_db()
-
-            print(rol)
 
             if not utils.isUsernameValid(username):
                 error = "El usuario debe ser alfanumerico"
@@ -123,14 +150,14 @@ def register():
                 flash(error)
                 return render_template('register.html')
 
-            if db.execute('SELECT * FROM usuarios WHERE usuario=? OR correo=?',(username,email)).fetchone() is not None:
-                error= "El usuario o correo electronico ya estan registrados"
+            if db.execute('SELECT * FROM usuarios WHERE usuario=? AND correo=?',(username, email)).fetchone() is not None:
+                error = "El usuario o correo electronico ya estan registrados"
                 flash(error)
                 return render_template('register.html')
-            hash_password= generate_password_hash(password)
-            db.execute('INSERT INTO usuarios (usuario,contraseña,correo,rol,activo) VALUES (?,?,?,?,1)',(username,hash_password,email,rol))
-            db.commit()
 
+            hash_password = generate_password_hash(password)
+            db.execute('INSERT INTO usuarios (usuario,contraseña,correo,rol,activo) VALUES (?,?,?,?,1)',(username, hash_password, email, rol))
+            db.commit()
 
             serverEmail = yagmail.SMTP('CafeteriaAromaMisionTic@gmail.com', 'Maracuya123')
 
@@ -142,8 +169,9 @@ def register():
             return render_template('login.html')
 
         return render_template('register.html')
+
     except Exception as e:
-        print("Ocurrio un eror:", e)
+        #print("Ocurrio un eror:", e)
         return render_template('register.html')
 
 @app.route('/passwordLost/', methods=('GET','POST'))
@@ -194,6 +222,31 @@ def revision():
     except Exception as e:
         #print("Ocurrio un eror:", e)
         return render_template('login.html')
+
+def login_requeried(view):
+    @Functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('login'))
+        return view(**kwargs)
+    return wrapped_view
+
+@app.route("/logout/")
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+@app.before_request
+def load_logged_user():
+    usuario = session.get("usuario")
+    print("aaa")
+    print(usuario)
+    if usuario is None:
+        g.user = None
+    else:        
+        close_db()
+        g.user = get_db().execute('SELECT * FROM usuarios WHERE usuario=?', (usuario,)).fetchone
+        print(g.user)
 
 if __name__ == '__main__':
     app.run()
