@@ -49,7 +49,7 @@
     
     <div class="main-wrapper" >
 	    
-	    <section class="blog-list px-3 py-5 p-md-5" " >
+	    <section class="blog-list px-3 py-5 p-md-5" >
 
 
            
@@ -63,8 +63,8 @@
                                     <div class="intro">{{product.3}}</div><br />
                                     <label class="meta" for="Inventario_actual" >Inventario actual: {{product.2}}</label>
                                        
-                                    <a href= "/editProduct/{{product.0}}/"><button class="botonAtualizarInventario">Actualizar producto</button></a>
-                                    <a href= "/deleteProduct/{{product.0}}/" ><button class="botonAtualizarInventario">Borrar Producto</button></a>
+                                    <a href= "/admin/editProduct/{{product.0}}/"><button class="botonAtualizarInventario">Actualizar producto</button></a>
+                                    <a href= "/deleteProduct/{{product.0}}/" ><button class="botonAtualizarInventario" clas ="btn-delete">Borrar Producto</button></a>
                                     <br />
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
     </div><!--//main-wrapper-->
 
 
-
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <footer class="footer text-center py-2 theme-bg-dark">	   	    
         <small class="copyright">Diseñado con <i style="color: #ff0000;"> Amor </i> by developers MisionTic2022 GrupoF UniNorte</small>    
     </footer>

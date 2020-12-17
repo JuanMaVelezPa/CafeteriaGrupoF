@@ -51,7 +51,7 @@ def login():
                     if user[3]== 1:
                         return redirect(url_for('admin'))
                 
-                    return render_template('store.html')
+                    return redirect(url_for('store'))
             return render_template('login.html')
         return render_template('login.html')
     except TypeError as e:
@@ -60,20 +60,31 @@ def login():
 
 @app.route('/store/')
 def store():
-    return render_template('store.html')
+    close_db()
+    db = get_db()
+    data = db.execute('SELECT * FROM productos').fetchall()
 
-@app.route('/editProduct/<id_producto>/')
-def updateProduct(id_producto):
+    return render_template('store.html', products = data)
+
+@app.route('/admin/editProduct/<id_producto>/')
+def updateProductadmin(id_producto):
     close_db()
     db=get_db()
     productdata = db.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto)).fetchall()
 
-    return render_template('editProduct.html', product = productdata[0])
+    return render_template('editProductadmin.html', product = productdata[0])
 
+@app.route('/store/editProduct/<id_producto>/')
+def updateProductstore(id_producto):
+    close_db()
+    db=get_db()
+    productdata = db.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto)).fetchall()
 
+    return render_template('editProductstore.html', product = productdata[0])
 
-@app.route('/updateProduct/<id_producto>/', methods=('GET','POST'))
-def updateproduct(id_producto):
+@app.route('/admin/updateProduct/<id_producto>/', methods=('GET','POST'))
+def updateproductadmin(id_producto):
+
     if request.method == 'POST':
         nombreprod = request.form['np']
         descripcionprod = request.form['dp']
@@ -83,20 +94,25 @@ def updateproduct(id_producto):
         db.execute('UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ? WHERE id_producto = ?',(nombreprod,descripcionprod,cantidadprod, id_producto))
         db.commit()
         return redirect(url_for('admin'))
-    return redirect(url_for('admin'))
-# #     # cantidad = request.form['NuevoInventario']
-# #     #print(cantidad)
-# #     close_db()
-# #     db = get_db()
-# #     db.execute('UPDATE productos SET cantidad = ? WHERE id_producto = ?',(10, id_producto))
-# #     # print(cantidad,id_producto)
-# #     db.commit()
-#     return redirect(url_for('admin'))
+    error = "Error actualizando producto"
+    flash(error)
+    return redirect(url_for('editProduct'))
 
+@app.route('/store/updateProduct/<id_producto>/', methods=('GET','POST'))
+def updateproductstore(id_producto):
 
-
-
-
+    if request.method == 'POST':
+        nombreprod = request.form['np']
+        descripcionprod = request.form['dp']
+        cantidadprod = request.form['cp']
+        close_db()
+        db = get_db()
+        db.execute('UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ? WHERE id_producto = ?',(nombreprod,descripcionprod,cantidadprod, id_producto))
+        db.commit()
+        return redirect(url_for('store'))
+    error = "Error actualizando producto"
+    flash(error)
+    return redirect(url_for('editProduct'))
 
 @app.route('/deleteProduct/<string:id_producto>/')
 def deleteProduct(id_producto):
