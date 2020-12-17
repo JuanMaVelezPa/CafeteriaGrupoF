@@ -1,11 +1,14 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
 from db import get_db, close_db
+import os
 from werkzeug.security import generate_password_hash,check_password_hash
 import utils
-import os 
 import yagmail as yagmail
+UPLOAD_FOLDER= os.path.abspath("./uploads/")
+#from OpenSSL, crypto import FILETYPE_PEM
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.config["UPLOAD_FOLDER"]= UPLOAD_FOLDER
 
 @app.route('/')
 def hello_world():
@@ -71,14 +74,18 @@ def registerProduct():
             nombre= request.form['np']
             descripcion= request.form['dp']
             cantidad= request.form['cp']
-            #imagen= request.form['imagenp']
-            #print(imagen)
+            f= request.files['imagenp']
+
+            filename= f.filename
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            send_from_directory(app.config['UPLOAD_FOLDER'],filename)
+           
             if db.execute('SELECT * FROM productos WHERE nombre=?',(nombre,)).fetchone() is not None:
                 error= "El nombre del producto ya esta registrado"
                 flash(error)
                 return render_template('registerProduct.html')
             
-            db.execute('INSERT INTO productos (nombre,descripcion,cantidad) VALUES (?,?,?)',(nombre,descripcion,cantidad))
+            db.execute('INSERT INTO productos (nombre,descripcion,cantidad,imagen) VALUES (?,?,?,?)',(nombre,descripcion,cantidad,filename))
             db.commit()
             
             return render_template('admin.html')
@@ -87,7 +94,8 @@ def registerProduct():
         print("Ocurrio un error ",e)
         return render_template('registerProduct.html')
 
-    
+
+        
 
 @app.route('/passwordLost/')
 def passwordLost():
