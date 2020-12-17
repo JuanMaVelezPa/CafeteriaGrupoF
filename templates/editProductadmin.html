@@ -1,0 +1,13 @@
+
+    <form method="post" action="/admin/updateProduct/{{ product.0 }}/">
+         <link rel="stylesheet" type="text/css" href="../static/css/store.css" /> 
+         <img src="../static/images/logo_misionTic.png" class="imgLogo"  alt=""> 
+        <input type="text" name="np" placeholder="Nombre del producto" value = "{{ product.1 }}" />
+        <input type="text" name="dp" placeholder="Descripción del producto" value = "{{ product.3 }}" />
+        <input type="text" name="cp" placeholder ="{{ product.2 }}" />
+         
+        <!-- <input type="file" name="imagenp" id ="selprod" accept="image/png"> -->
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Actualizar producto</button>
+    </form>
+    
