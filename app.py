@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
-=======
-from flask import Flask, render_template, request, flash, redirect, make_response ,session, g, url_for, send_file 
->>>>>>> 90f72db627cd3f5aa6109e562246cb9707cc2e9b
+from flask import Flask, render_template, request, flash, redirect, make_response ,session, g, url_for, send_file, send_from_directory
 from db import get_db, close_db
 import os
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -10,13 +6,10 @@ from functools import wraps
 
 import utils
 import yagmail as yagmail
-<<<<<<< HEAD
 UPLOAD_FOLDER= os.path.abspath("./static/images/")
 #from OpenSSL, crypto import FILETYPE_PEM
-=======
 import functools
 
->>>>>>> 90f72db627cd3f5aa6109e562246cb9707cc2e9b
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config["UPLOAD_FOLDER"]= UPLOAD_FOLDER
@@ -75,14 +68,6 @@ def login():
                 flash(error)
                 return render_template("login.html")
 
-<<<<<<< HEAD
-                #Es admin
-                    if user[3]== 1:
-                        return redirect(url_for('admin'))
-                
-                    return redirect(url_for('store'))
-=======
->>>>>>> 90f72db627cd3f5aa6109e562246cb9707cc2e9b
             return render_template('login.html')
         return render_template('login.html')
     except TypeError as e:
@@ -96,7 +81,6 @@ def getcookie():
 
 @app.route('/store/')
 def store():
-<<<<<<< HEAD
     close_db()
     db = get_db()
     data = db.execute('SELECT * FROM productos').fetchall()
@@ -161,21 +145,13 @@ def deleteProduct(id_producto):
 
 @app.route('/admin/')
 def admin():
+    if g.user is None:
+        return redirect(url_for('login'))
+    close_db()
     db = get_db()
     data = db.execute('SELECT * FROM productos').fetchall()
-    #print(data)
     return render_template('admin.html',products = data)
-=======
-    if g.user is None:
-        return redirect(url_for('login'))
-    return render_template('store.html')
 
-@app.route('/admin/')
-def admin():
-    if g.user is None:
-        return redirect(url_for('login'))
-    return render_template('admin.html')
->>>>>>> 90f72db627cd3f5aa6109e562246cb9707cc2e9b
 
 @app.route('/registerProduct/',methods=('GET','POST'))
 def registerProduct():
