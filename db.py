@@ -10,7 +10,7 @@ def get_db():#Conecta base de datos
     except Error:
         print(Error)
 
-def close_db():#Desconecta base de datos
+def close_db(e=None):#Desconecta base de datos
     db = g.pop('db',None)
     if db is not None:
         db.close()
