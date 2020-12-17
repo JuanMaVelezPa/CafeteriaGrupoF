@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
-=======
 from flask import Flask, render_template, request, flash, redirect, make_response ,session, g, url_for, send_file, send_from_directory
->>>>>>> master
 from db import get_db, close_db
 import os
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -10,15 +6,10 @@ from functools import wraps
 
 import utils
 import yagmail as yagmail
-<<<<<<< HEAD
-UPLOAD_FOLDER= os.path.abspath("./uploads/")
-#from OpenSSL, crypto import FILETYPE_PEM
-=======
 UPLOAD_FOLDER= os.path.abspath("./static/images/")
 #from OpenSSL, crypto import FILETYPE_PEM
 import functools
 
->>>>>>> master
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config["UPLOAD_FOLDER"]= UPLOAD_FOLDER
@@ -182,33 +173,19 @@ def registerProduct():
             nombre= request.form['np']
             descripcion= request.form['dp']
             cantidad= request.form['cp']
-<<<<<<< HEAD
-            f= request.files['imagenp']
-
-            filename= f.filename
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            send_from_directory(app.config['UPLOAD_FOLDER'],filename)
-           
-=======
             f = request.files['imagenp']
 
             filename= f.filename
             
->>>>>>> master
             if db.execute('SELECT * FROM productos WHERE nombre=?',(nombre,)).fetchone() is not None:
                 error= "El nombre del producto ya esta registrado"
                 flash(error)
                 close_db()
                 return render_template('registerProduct.html')
-<<<<<<< HEAD
-            
-            db.execute('INSERT INTO productos (nombre,descripcion,cantidad,imagen) VALUES (?,?,?,?)',(nombre,descripcion,cantidad,filename))
-=======
 
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             send_from_directory(app.config['UPLOAD_FOLDER'],filename)
             db.execute('INSERT INTO productos (nombre,descripcion,cantidad, imagen) VALUES (?,?,?,?)',(nombre,descripcion,cantidad,"../static/images/"+filename+"/"))
->>>>>>> master
             db.commit()
             close_db()
             
@@ -218,12 +195,6 @@ def registerProduct():
         print("Ocurrio un error ",e)
         return render_template('registerProduct.html')
 
-<<<<<<< HEAD
-
-        
-
-=======
->>>>>>> master
 @app.route('/passwordLost/')
 def passwordLost():
     return render_template('passwordLost.html')
