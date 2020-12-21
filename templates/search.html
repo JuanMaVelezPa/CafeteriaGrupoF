@@ -37,6 +37,7 @@
             <a href="{{ url_for('logout') }}"  class="login-forgot-pass">* Cerrar sesión</a>
             </br></br>
             <a href="{{ url_for('logout') }}"  class="login-forgot-pass">* Ingresar como Usuario</a>
+           
             
             </br></br> <hr>    
         </nav>
@@ -44,11 +45,13 @@
     
     <h2>Buscador de productos</h2>
     <form method="post" enctype="multipart/form-data" action="{{ url_for('search') }}">
-    <input name="nombreP" type="text" class="buscador" placeholder="Ingrese el nombre del producto"></input>
-    <button class="botonBuscador">Buscar</button>
-    </form>
-    <div class="main-wrapper" >	    
+        <input name="nombreP" type="text" class="buscador" placeholder="Ingrese el nombre del producto"></input>
+        <button class="botonBuscador">Buscar</button>
+        </form>
+    <div class="main-wrapper" >	 
+        <a href="{{ url_for('admin') }}"  style="color: snow;"> Regresar</a>   
 	    <section class="blog-list px-3 py-5 p-md-5" >
+           
             {% for product in products%}
                 <hr> <div class="container" >
                     <div class="item mb-5">
