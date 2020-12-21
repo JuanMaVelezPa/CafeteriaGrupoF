@@ -99,7 +99,7 @@ def updateProductstore(id_producto):
         return redirect(url_for("login"))
     close_db()
     db=get_db()
-    productdata = db.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto)).fetchall()
+    productdata =db.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto)).fetchall()
     close_db()
     return render_template('editProductstore.html', product = productdata[0])
 
@@ -133,7 +133,8 @@ def updateproductstore(id_producto):
         cantidadprod = request.form['cp']
         close_db()
         db = get_db()
-        db.execute('UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ? WHERE id_producto = ?',(nombreprod,descripcionprod,cantidadprod, id_producto))
+        db.execute('UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ? WHERE id_producto = ?',
+        (nombreprod,descripcionprod,cantidadprod, id_producto))
         db.commit()
         close_db()
         return redirect(url_for('store'))
@@ -160,6 +161,29 @@ def admin():
     close_db()
     return render_template('admin.html',products = data)
 
+@app.route('/search/',methods=('GET','POST'))
+def search():
+    if request.method == 'POST':
+            productoname = request.form['nombreP']
+            close_db()
+            db=get_db()
+            data1= db.execute('SELECT * FROM productos WHERE nombre LIKE "%{0}%"'.format(productoname)).fetchall()
+            close_db()
+            print(data1)
+            return render_template('search.html',products = data1)
+
+@app.route('/searchUser/',methods=('GET','POST'))
+def searchUser():
+    if request.method == 'POST':
+            productoname = request.form['nombreP']
+            close_db()
+            db=get_db()
+            data1= db.execute('SELECT * FROM productos WHERE nombre LIKE "%{0}%"'.format(productoname)).fetchall()
+            close_db()
+            print(data1)
+            return render_template('searchUser.html',products = data1)
+
+
 
 @app.route('/registerProduct/',methods=('GET','POST'))
 def registerProduct():
@@ -185,7 +209,8 @@ def registerProduct():
 
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             send_from_directory(app.config['UPLOAD_FOLDER'],filename)
-            db.execute('INSERT INTO productos (nombre,descripcion,cantidad, imagen) VALUES (?,?,?,?)',(nombre,descripcion,cantidad,"../static/images/"+filename+"/"))
+            db.execute('INSERT INTO productos (nombre,descripcion,cantidad, imagen) VALUES (?,?,?,?)',
+            (nombre,descripcion,cantidad,"../static/images/"+filename+"/"))
             db.commit()
             close_db()
             
@@ -229,14 +254,16 @@ def register():
                 flash(error)
                 return render_template('register.html')
 
-            if db.execute('SELECT * FROM usuarios WHERE usuario=? AND correo=?',(username, email)).fetchone() is not None:
+            if db.execute('SELECT * FROM usuarios WHERE usuario=? AND correo=?',
+            (username, email)).fetchone() is not None:
                 error = "El usuario o correo electronico ya estan registrados"
                 flash(error)
                 close_db()
                 return render_template('register.html')
 
             hash_password = generate_password_hash(password)
-            db.execute('INSERT INTO usuarios (usuario,contraseña,correo,rol,activo) VALUES (?,?,?,?,1)',(username, hash_password, email, rol))
+            db.execute('INSERT INTO usuarios (usuario,contraseña,correo,rol,activo)'+
+             'VALUES (?,?,?,?,1)',(username, hash_password, email, rol))
             db.commit()
             close_db()
 
@@ -320,7 +347,6 @@ def logout():
 @app.before_request
 def load_logged_user():
     usuario = session.get("usuario")
-    print("aaa")
     print(usuario)
     if usuario is None:
         g.user = None
